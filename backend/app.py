@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import openai
 import os
@@ -10,13 +10,13 @@ import base64
 # Környezeti változók betöltése
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static", static_url_path="")
 CORS(app)
 
 # OpenAI API kulcs beállítása
-openai.api_key = os.getenv('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')
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
-client = openai.OpenAI(api_key="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")
+client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 @app.route('/api/roast', methods=['POST'])
 def generate_roast():
@@ -111,6 +111,18 @@ def roast_image():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route("/")
+def serve_index():
+    return send_from_directory(app.static_folder, "index.html")
+
+@app.route('/<path:path>')
+def serve_static(path):
+    return send_from_directory(app.static_folder, path)
+
+@app.errorhandler(404)
+def not_found(e):
+    return send_from_directory(app.static_folder, "index.html")
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000) 

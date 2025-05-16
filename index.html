@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roast.exe - Get Roasted!</title>
+    <link rel="stylesheet" href="./style.css">
+    <script defer src="./script.js"></script>
+</head>
+<body>
+    <header class="header">
+        <img src="./performate.svg" alt="Performate Logo" class="logo">
+        <h1>🔥 Roast.exe 🔥</h1>
+        <p class="subtitle">Tedd ki a setupod a tűzre!</p>
+    </header>
+
+    <div class="main-container">
+        <div class="glass-card upload-area" id="drop-area">
+            <input type="file" id="imageUpload" accept="image/*" hidden>
+            <div class="upload-content">
+                <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <label for="imageUpload">Húzd ide a képet vagy kattints a feltöltéshez</label>
+            </div>
+        </div>
+
+        <div id="imagePreview" class="image-preview glass-card" style="display: none;">
+            <img id="previewImage" src="" alt="Előnézet">
+        </div>
+
+        <button id="roastButton" class="glass-button" style="display: none;">
+            <span class="button-content">
+                <span class="button-icon">🔥</span>
+                Roast Me!
+            </span>
+        </button>
+
+        <div id="roastMessage" class="roast-message glass-card" style="display: none;">
+            <div class="roast-content"></div>
+            <button id="downloadButton" class="glass-button secondary" style="margin-top:1rem;display:none;">
+                <span class="button-content">
+                    <span class="button-icon">⬇️</span>
+                    Letöltés & Megosztás
+                </span>
+            </button>
+        </div>
+
+        <div class="cta-buttons">
+            <button class="glass-button secondary" onclick="window.open('https://performate.gg', '_blank')">
+                <span class="button-content">
+                    <span class="button-icon">💡</span>
+                    Tudj meg többet a Performate-ről
+                </span>
+            </button>
+            <button class="glass-button secondary" onclick="window.open('https://discord.gg/performate', '_blank')">
+                <span class="button-content">
+                    <span class="button-icon">🎮</span>
+                    Csatlakozz Discordon!
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Powered by Performate • <a href="https://discord.gg/performate" target="_blank">Csatlakozz a közösséghez!</a></p>
+    </footer>
+</body>
+</html>

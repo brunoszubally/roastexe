@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData();
             formData.append('image', file);
 
-            const response = await fetch('http://localhost:5000/api/roast-image', {
+            const response = await fetch('/api/roast-image', {
                 method: 'POST',
                 body: formData
             });

@@ -84,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
             roastButton.disabled = true;
             roastContent.textContent = 'Generálom a roast-ot...';
             roastMessage.style.display = 'block';
-            downloadButton.style.display = 'none';
 
             // Kép elküldése formdata-ban
             const file = imageUpload.files[0];
@@ -108,74 +107,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             roastContent.textContent = data.roast;
             roastMessage.classList.add('fade-in');
-            downloadButton.style.display = 'block';
 
         } catch (error) {
             console.error('Hiba történt:', error);
             roastContent.textContent = 'Sajnálom, nem sikerült generálni a roast-ot. Kérlek, próbáld újra!';
-            downloadButton.style.display = 'none';
         } finally {
             roastButton.classList.remove('loading');
             roastButton.disabled = false;
         }
-    });
-
-    // Letöltés gomb logika
-    downloadButton.addEventListener('click', async () => {
-        // Canvas méretek
-        const width = 900;
-        const height = 1100;
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-
-        // Háttér (glasmorphism stílus)
-        const grad = ctx.createLinearGradient(0, 0, width, height);
-        grad.addColorStop(0, '#0a0a0a');
-        grad.addColorStop(1, '#00ff9d');
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, width, height);
-
-        // Kép berajzolása
-        const img = new window.Image();
-        img.crossOrigin = 'anonymous';
-        img.src = previewImage.src;
-        await new Promise(resolve => { img.onload = resolve; });
-        // Kép méretezés
-        const imgW = width - 128;
-        const imgH = Math.min(height * 0.45, img.height * (imgW / img.width));
-        ctx.drawImage(img, 64, 64, imgW, imgH);
-
-        // Logó berajzolása
-        const logo = new window.Image();
-        logo.crossOrigin = 'anonymous';
-        logo.src = logoUrl;
-        await new Promise(resolve => { logo.onload = resolve; });
-        ctx.globalAlpha = 0.85;
-        ctx.drawImage(logo, width - 144, 32, 80, 80);
-        ctx.globalAlpha = 1;
-
-        // Roast szöveg
-        ctx.font = 'bold 32px Inter, sans-serif';
-        ctx.fillStyle = '#fff';
-        ctx.textAlign = 'left';
-        ctx.shadowColor = '#000';
-        ctx.shadowBlur = 8;
-        wrapText(ctx, roastContent.textContent, 64, imgH + 140, width - 128, 40);
-        ctx.shadowBlur = 0;
-
-        // Branding
-        ctx.font = 'bold 24px Inter, sans-serif';
-        ctx.fillStyle = '#00ff9d';
-        ctx.textAlign = 'right';
-        ctx.fillText('performate.gg', width - 64, height - 48);
-
-        // Letöltés
-        const link = document.createElement('a');
-        link.download = 'roastexe.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
     });
 
     // Szöveg tördelő segédfüggvény

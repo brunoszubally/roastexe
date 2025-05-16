@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import io
 from PIL import Image
 import base64
+import re
 
 # Környezeti változók betöltése
 load_dotenv()
@@ -46,6 +47,8 @@ def generate_roast():
         # 4. Lekérjük a választ
         messages = client.beta.threads.messages.list(thread_id=thread.id)
         roast = messages.data[0].content[0].text.value
+        # Forrásjelölések eltávolítása
+        roast = re.sub(r"\[\d+:\d+[^\]]*source\]", "", roast).strip()
         return jsonify({"roast": roast})
 
     except Exception as e:
@@ -109,6 +112,8 @@ def roast_image():
             time.sleep(1)
         messages = client.beta.threads.messages.list(thread_id=thread.id)
         roast = messages.data[0].content[0].text.value
+        # Forrásjelölések eltávolítása
+        roast = re.sub(r"\[\d+:\d+[^\]]*source\]", "", roast).strip()
         return jsonify({"roast": roast})
 
     except Exception as e:

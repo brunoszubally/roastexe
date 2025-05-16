@@ -48,7 +48,7 @@ def generate_roast():
         messages = client.beta.threads.messages.list(thread_id=thread.id)
         roast = messages.data[0].content[0].text.value
         # Forrásjelölések eltávolítása
-        roast = re.sub(r"\[\d+:\d+[^\]]*source\]", "", roast).strip()
+        roast = re.sub(r"[【\\[].*?source[】\\]]", "", roast).strip()
         return jsonify({"roast": roast})
 
     except Exception as e:
@@ -113,7 +113,7 @@ def roast_image():
         messages = client.beta.threads.messages.list(thread_id=thread.id)
         roast = messages.data[0].content[0].text.value
         # Forrásjelölések eltávolítása
-        roast = re.sub(r"\[\d+:\d+[^\]]*source\]", "", roast).strip()
+        roast = re.sub(r"[【\\[].*?source[】\\]]", "", roast).strip()
         return jsonify({"roast": roast})
 
     except Exception as e:
